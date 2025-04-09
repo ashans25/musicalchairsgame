@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Musical Chairs Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game-header">
+        <div class="language-toggle">
+            <button id="langToggle" class="lang-button">සිංහල</button>
+        </div>
+        <h1>Musical Chairs Game</h1>
+    </div>
+    <div class="container">
+        <div class="control-panel">
+            <div class="panel-section">
+                <h2>Player Management</h2>
+                <div class="settings-group">
+                    <label for="playerCount">Number of Players:</label>
+                    <input type="number" id="playerCount" min="3" value="3">
+                </div>
+                <button class="panel-button add" id="addPlayer">Add Player</button>
+                <button class="panel-button remove" id="removePlayer">Remove Player</button>
+                <div class="current-players-display">
+                    <div id="currentPlayersContainer" class="current-players-container"></div>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <h2>Music Controls</h2>
+                <div class="settings-group">
+                    <label for="musicFile" class="file-upload-label">Choose Music File</label>
+                    <input type="file" id="musicFile" accept="audio/*">
+                    <div class="file-name"></div>
+                </div>
+                <audio id="gameAudio" controls></audio>
+                <button class="panel-button music-remove" id="removeMusic">Remove Music</button>
+            </div>
+
+            <div class="panel-section">
+                <h2>Timer Settings</h2>
+                <div class="settings-group">
+                    <label for="minDuration">Minimum Duration (seconds):</label>
+                    <input type="number" id="minDuration" min="5" value="5">
+                </div>
+                <div class="settings-group">
+                    <label for="maxDuration">Maximum Duration (seconds):</label>
+                    <input type="number" id="maxDuration" min="10" value="10">
+                </div>
+                <div class="settings-group">
+                    <label for="setupTime">Setup Time (seconds):</label>
+                    <input type="number" id="setupTime" min="5" value="5">
+                </div>
+                
+                <div class="last-round-settings-toggle">
+                    <div class="switch-label">
+                        <label>Custom Last Round Timer:</label>
+                        <label class="switch">
+                            <input type="checkbox" id="lastRoundToggle">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="last-round-settings hidden" id="lastRoundSettings">
+                    <div class="settings-group">
+                        <label for="lastRoundDuration">Last Round Duration (seconds):</label>
+                        <input type="number" id="lastRoundDuration" min="5" value="15">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="start-game-container">
+            <button class="panel-button start" id="startGame">Start Game</button>
+        </div>
+    </div>
+
+    <!-- Game Modal -->
+    <div class="game-modal" id="gameModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            
+            <!-- Status Area -->
+            <div class="modal-status-area">
+                <h1>Musical Chairs Game</h1>
+                <div class="timer-display" id="timerDisplay">00:00</div>
+                <p id="gameStatus">Ready to start</p>
+                <div class="game-controls">
+                    <button class="control-btn pause" id="pauseGame">Pause</button>
+                    <button class="control-btn reset" id="resetGame">Reset</button>
+                    <button class="control-btn return" id="returnPlayer">Return</button>
+                </div>
+            </div>
+            
+            <div class="game-area">
+                <div class="players-display" id="playersDisplay"></div>
+                <div class="chairs-display" id="chairsDisplay"></div>
+            </div>
+            
+            <!-- Eliminated Players Section -->
+            <div class="modal-eliminated-section">
+                <h3>Eliminated Players</h3>
+                <div class="eliminated-players" id="eliminatedPlayers"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cookie Consent Banner -->
+    <div class="cookie-consent" id="cookieConsent">
+        <div class="cookie-consent-content">
+            <p id="cookieText">This website uses local storage to enhance your gaming experience. By using our site, you agree to our use of local storage.</p>
+            <a href="privacy-policy.html" id="privacyLink">Privacy Policy</a>
+            <button id="acceptCookies">Accept</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="privacy-policy.html">Privacy Policy</a>
+                <span class="footer-divider">|</span>
+                <a href="https://github.com/yourusername/your-repo" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <span class="footer-divider">|</span>
+                <a href="mailto:your.email@example.com">Contact</a>
+            </div>
+            <div class="footer-copyright">
+                © 2025 Musical Chairs Game. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script src="translations.js"></script>
+    <script src="game.js"></script>
+    
+    <!-- Cookie Consent Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cookieConsent = document.getElementById('cookieConsent');
+            const acceptButton = document.getElementById('acceptCookies');
+            const cookieText = document.getElementById('cookieText');
+            const privacyLink = document.getElementById('privacyLink');
+            
+            // Check if user has already accepted
+            if (!localStorage.getItem('cookieConsent')) {
+                setTimeout(() => {
+                    cookieConsent.classList.add('show');
+                }, 1000);
+            }
+            
+            // Handle accept button click
+            acceptButton.addEventListener('click', () => {
+                localStorage.setItem('cookieConsent', 'true');
+                cookieConsent.classList.remove('show');
+            });
+            
+            // Update text when language changes
+            function updateConsentText() {
+                const lang = window.game.currentLang;
+                if (lang === 'si') {
+                    cookieText.textContent = 'මෙම වෙබ් අඩවිය ඔබගේ ක්‍රීඩා අත්දැකීම වැඩිදියුණු කිරීම සඳහා දේශීය ගබඩාව භාවිතා කරයි. අපගේ අඩවිය භාවිතා කිරීමෙන් ඔබ දේශීය ගබඩාව භාවිතා කිරීමට එකඟ වේ.';
+                    acceptButton.textContent = 'පිළිගන්න';
+                    privacyLink.textContent = 'පෞද්ගලිකත්ව ප්රතිපත්තිය';
+                } else {
+                    cookieText.textContent = 'This website uses local storage to enhance your gaming experience. By using our site, you agree to our use of local storage.';
+                    acceptButton.textContent = 'Accept';
+                    privacyLink.textContent = 'Privacy Policy';
+                }
+            }
+            
+            // Listen for language changes
+            const langToggle = document.getElementById('langToggle');
+            langToggle.addEventListener('click', updateConsentText);
+        });
+    </script>
+</body>
+</html>
