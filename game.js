@@ -5,7 +5,8 @@ class MusicalChairsGame {
             eliminated: [],
             currentRound: 0,
             isPlaying: false,
-            isSetupPhase: false
+            isSetupPhase: false,
+            isInitialSetup: false  // Add this new flag
         };
         
         this.currentLang = 'en'; // Set default language to English
@@ -119,7 +120,8 @@ class MusicalChairsGame {
             // Add this line to update the display before starting the game
             this.updateDisplay();
             
-            this.startGame();
+            // Start with initial setup phase instead of going directly to the game
+            this.startInitialSetupPhase();
         });
 
         this.closeModalButton.addEventListener('click', () => {
@@ -820,7 +822,8 @@ class MusicalChairsGame {
             'Find a chair! Next round starting soon...': 'findChair',
             'Final Round! One chair left...': 'finalRound',
             'Game Over! Winner found!': 'gameOver',
-            'Game reset': 'gameReset'
+            'Game reset': 'gameReset',
+            'Get ready! Game starting soon...': 'getReady' // Add this new mapping
         };
 
         const key = statusKeys[status] || status;
@@ -1457,6 +1460,39 @@ showToast(message, type = 'info', duration = 3000) {
             console.warn(`Element for event ${eventType} not found`);
         }
     }
+
+    // Add this new method for the initial setup phase
+    startInitialSetupPhase() {
+        // Set the initial setup flag
+        this.state.isInitialSetup = true;
+        this.state.isSetupPhase = true;
+        
+        // Get setup time from inputs
+        let setupTime = this.getSecondsFromInputs(
+            this.setupTimeMinInput,
+            this.setupTimeSecInput
+        );
+        
+        // Update UI
+        this.updateGameStatus('Get ready! Game starting soon...');
+        this.updateTimerDisplay(setupTime);
+        
+        // Start countdown
+        this.timers.setup = setInterval(() => {
+            setupTime--;
+            this.updateTimerDisplay(setupTime);
+            
+            if (setupTime <= 0) {
+                // Clear timer and flags
+                clearInterval(this.timers.setup);
+                this.state.isInitialSetup = false;
+                this.state.isSetupPhase = false;
+                
+                // Now start the actual game
+                this.startGame();
+            }
+        }, 1000);
+    }
 }
 
 // Simple English-only translations object
@@ -1469,6 +1505,7 @@ const translations = {
         finalRound: "Final Round! One chair left...",
         gameOver: "Game Over! Winner found!",
         gameReset: "Game reset",
+        getReady: "Get ready! Game starting soon...", // Add this new message
         
         // Button texts
         startGame: "Start Game",
