@@ -18,6 +18,9 @@
 
 
 ## 🎮 Overview
+![Screenshot](https://github.com/user-attachments/assets/c5cadc3b-21bb-44f9-b668-540fa2db7629)
+
+
 
 An interactive web-based implementation to Automate the classic Musical Chairs party game, designed for modern browsers with a clean, responsive interface. Perfect for children's parties, classroom activities, team-building events, or any social gathering!
 
