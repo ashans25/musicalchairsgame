@@ -3,15 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Musical Chairs Game</title>
+    <title>MCG</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="game-header">
-        <div class="language-toggle">
-            <button id="langToggle" class="lang-button">සිංහල</button>
+        <img src="images/logo.png" alt="Musical Chairs Game Logo" width="255" height="108">
+        <!-- Add new top-right buttons container -->
+        <div class="top-right-controls">
+            <button class="panel-button start" id="startGame" disabled>Start Game</button>
+            <button id="resetSettingsBtn" class="panel-button reset-memory">Reset All Settings</button>
         </div>
-        <h1>Musical Chairs Game</h1>
     </div>
     <div class="container">
         <div class="control-panel">
@@ -22,36 +24,58 @@
                     <input type="number" id="playerCount" min="3" value="3">
                 </div>
                 <button class="panel-button add" id="addPlayer">Add Player</button>
-                <button class="panel-button remove" id="removePlayer">Remove Player</button>
+                <button class="panel-button remove" id="removePlayer" disabled>Remove Player</button>
                 <div class="current-players-display">
                     <div id="currentPlayersContainer" class="current-players-container"></div>
                 </div>
             </div>
 
             <div class="panel-section">
-                <h2>Music Controls</h2>
-                <div class="settings-group">
-                    <label for="musicFile" class="file-upload-label">Choose Music File</label>
-                    <input type="file" id="musicFile" accept="audio/*">
-                    <div class="file-name"></div>
-                </div>
-                <audio id="gameAudio" controls></audio>
-                <button class="panel-button music-remove" id="removeMusic">Remove Music</button>
-            </div>
-
-            <div class="panel-section">
                 <h2>Timer Settings</h2>
+                
+                <!-- Min Duration - Replace seconds with min/sec inputs -->
                 <div class="settings-group">
-                    <label for="minDuration">Minimum Duration (seconds):</label>
-                    <input type="number" id="minDuration" min="5" value="5">
+                    <label>Minimum Duration:</label>
+                    <div class="time-input-container">
+                        <div class="time-input-group">
+                            <input type="number" id="minDurationMin" min="0" max="59" value="0" class="time-input">
+                            <span class="time-label">min</span>
+                        </div>
+                        <div class="time-input-group">
+                            <input type="number" id="minDurationSec" min="0" max="59" value="0" class="time-input">
+                            <span class="time-label">sec</span>
+                        </div>
+                    </div>
                 </div>
+                
+                <!-- Max Duration - Replace seconds with min/sec inputs -->
                 <div class="settings-group">
-                    <label for="maxDuration">Maximum Duration (seconds):</label>
-                    <input type="number" id="maxDuration" min="10" value="10">
+                    <label>Maximum Duration:</label>
+                    <div class="time-input-container">
+                        <div class="time-input-group">
+                            <input type="number" id="maxDurationMin" min="0" max="59" value="0" class="time-input">
+                            <span class="time-label">min</span>
+                        </div>
+                        <div class="time-input-group">
+                            <input type="number" id="maxDurationSec" min="0" max="59" value="0" class="time-input">
+                            <span class="time-label">sec</span>
+                        </div>
+                    </div>
                 </div>
+                
+                <!-- Setup Time - Replace seconds with min/sec inputs -->
                 <div class="settings-group">
-                    <label for="setupTime">Setup Time (seconds):</label>
-                    <input type="number" id="setupTime" min="5" value="5">
+                    <label>Setup Time:</label>
+                    <div class="time-input-container">
+                        <div class="time-input-group">
+                            <input type="number" id="setupTimeMin" min="0" max="59" value="0" class="time-input">
+                            <span class="time-label">min</span>
+                        </div>
+                        <div class="time-input-group">
+                            <input type="number" id="setupTimeSec" min="0" max="59" value="10" class="time-input">
+                            <span class="time-label">sec</span>
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="last-round-settings-toggle">
@@ -63,18 +87,81 @@
                         </label>
                     </div>
                 </div>
+                
+                <!-- Last Round Duration - Replace with min/max inputs -->
                 <div class="last-round-settings hidden" id="lastRoundSettings">
+                    <!-- Min Last Round Duration -->
                     <div class="settings-group">
-                        <label for="lastRoundDuration">Last Round Duration (seconds):</label>
-                        <input type="number" id="lastRoundDuration" min="5" value="15">
+                        <label>Last Round Min Duration:</label>
+                        <div class="time-input-container">
+                            <div class="time-input-group">
+                                <input type="number" id="lastRoundMinDurationMin" min="0" max="59" value="0" class="time-input">
+                                <span class="time-label">min</span>
+                            </div>
+                            <div class="time-input-group">
+                                <input type="number" id="lastRoundMinDurationSec" min="0" max="59" value="0" class="time-input">
+                                <span class="time-label">sec</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Max Last Round Duration -->
+                    <div class="settings-group">
+                        <label>Last Round Max Duration:</label>
+                        <div class="time-input-container">
+                            <div class="time-input-group">
+                                <input type="number" id="lastRoundMaxDurationMin" min="0" max="59" value="0" class="time-input">
+                                <span class="time-label">min</span>
+                            </div>
+                            <div class="time-input-group">
+                                <input type="number" id="lastRoundMaxDurationSec" min="0" max="59" value="0" class="time-input">
+                                <span class="time-label">sec</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                
+                <!-- Save button at bottom of Timer Settings section -->
+                <div class="settings-group save-settings">
+                    <button id="saveTimerSettings" class="panel-button save" disabled>Save & Calculate Duration</button>
+                </div>
+            
             </div>
+
+            <div class="panel-section">
+                <h2>Music Controls</h2>
+                
+                <!-- Exact duration result display -->
+                <div id="exactDurationResult" class="exact-duration-result hidden">
+                    <div class="duration-header">Required Song Length:</div>
+                    <div id="exactDurationDisplay" class="time-display">00:00</div>
+                    <div class="time-note">based on saved timer settings</div>
+                </div>
+                
+                <!-- Rest of your Music Controls -->
+                <!-- ... -->
+                <div class="settings-group">
+                    <label for="musicFile" class="file-upload-label disabled">Choose Music File</label>
+                    <input type="file" id="musicFile" accept="audio/*" disabled>
+                    <div class="file-name"></div>
+                </div>
+                <audio id="gameAudio" controls></audio>
+                <button class="panel-button music-remove" id="removeMusic" disabled>Remove Music</button>
+            </div>
+
+            <!-- Remove this section entirely since we moved the reset button -->
+            <!-- <div class="panel-section settings-management">
+                <div class="settings-group">
+                    <button id="resetSettingsBtn" class="panel-button reset-memory">Reset All Settings</button>
+                </div>
+                <div class="settings-note">Settings are automatically saved when changed</div>
+            </div> -->
         </div>
 
-        <div class="start-game-container">
-            <button class="panel-button start" id="startGame">Start Game</button>
-        </div>
+        <!-- Remove this container since we moved the Start Game button -->
+        <!-- <div class="start-game-container">
+            <button class="panel-button start" id="startGame" disabled>Start Game</button>
+        </div> -->
     </div>
 
     <!-- Game Modal -->
@@ -88,9 +175,8 @@
                 <div class="timer-display" id="timerDisplay">00:00</div>
                 <p id="gameStatus">Ready to start</p>
                 <div class="game-controls">
-                    <button class="control-btn pause" id="pauseGame">Pause</button>
                     <button class="control-btn reset" id="resetGame">Reset</button>
-                    <button class="control-btn return" id="returnPlayer">Return</button>
+                    <button class="control-btn return" id="returnPlayer" disabled>Return Player</button>
                 </div>
             </div>
             
@@ -103,6 +189,24 @@
             <div class="modal-eliminated-section">
                 <h3>Eliminated Players</h3>
                 <div class="eliminated-players" id="eliminatedPlayers"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification System -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Modal Dialog System -->
+    <div id="modal-overlay" class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 id="modal-title">Title</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div id="modal-content" class="modal-content">Message goes here</div>
+            <div class="modal-footer">
+                <button id="modal-cancel" class="panel-button cancel">Cancel</button>
+                <button id="modal-confirm" class="panel-button confirm">OK</button>
             </div>
         </div>
     </div>
@@ -131,8 +235,6 @@
             </div>
         </div>
     </footer>
-
-    <script src="translations.js"></script>
     <script src="game.js"></script>
     
     <!-- Cookie Consent Script -->
@@ -140,8 +242,6 @@
         document.addEventListener('DOMContentLoaded', function() {
             const cookieConsent = document.getElementById('cookieConsent');
             const acceptButton = document.getElementById('acceptCookies');
-            const cookieText = document.getElementById('cookieText');
-            const privacyLink = document.getElementById('privacyLink');
             
             // Check if user has already accepted
             if (!localStorage.getItem('cookieConsent')) {
@@ -156,23 +256,7 @@
                 cookieConsent.classList.remove('show');
             });
             
-            // Update text when language changes
-            function updateConsentText() {
-                const lang = window.game.currentLang;
-                if (lang === 'si') {
-                    cookieText.textContent = 'මෙම වෙබ් අඩවිය ඔබගේ ක්‍රීඩා අත්දැකීම වැඩිදියුණු කිරීම සඳහා දේශීය ගබඩාව භාවිතා කරයි. අපගේ අඩවිය භාවිතා කිරීමෙන් ඔබ දේශීය ගබඩාව භාවිතා කිරීමට එකඟ වේ.';
-                    acceptButton.textContent = 'පිළිගන්න';
-                    privacyLink.textContent = 'පෞද්ගලිකත්ව ප්රතිපත්තිය';
-                } else {
-                    cookieText.textContent = 'This website uses local storage to enhance your gaming experience. By using our site, you agree to our use of local storage.';
-                    acceptButton.textContent = 'Accept';
-                    privacyLink.textContent = 'Privacy Policy';
-                }
-            }
-            
-            // Listen for language changes
-            const langToggle = document.getElementById('langToggle');
-            langToggle.addEventListener('click', updateConsentText);
+            // Remove the updateConsentText function and language listener
         });
     </script>
 </body>
