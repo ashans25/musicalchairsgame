@@ -228,7 +228,7 @@
                 <span class="footer-divider">|</span>
                 <a href="https://github.com/ashans25/musicalchairsgame" target="_blank" rel="noopener noreferrer">GitHub</a>
                 <span class="footer-divider">|</span>
-                <a href="mailto:your.email@example.com">Contact</a>
+                <a href="#" id="contactLink">Contact</a>
             </div>
             <div class="footer-copyright">
                 © 2025 Musical Chairs Game. All rights reserved.
@@ -257,6 +257,55 @@
             });
             
             // Remove the updateConsentText function and language listener
+            
+            // Contact link functionality
+            const contactLink = document.getElementById('contactLink');
+            const modalOverlay = document.getElementById('modal-overlay');
+            const modalTitle = document.getElementById('modal-title');
+            const modalContent = document.getElementById('modal-content');
+            const modalCancel = document.getElementById('modal-cancel');
+            const modalConfirm = document.getElementById('modal-confirm');
+            const modalClose = document.querySelector('.modal-close');
+            
+            contactLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Set up the modal
+                modalTitle.textContent = 'Contact Information';
+                modalContent.innerHTML = `
+                    <div style="display: flex; flex-direction: column; gap: 16px;">
+                        <div>
+                            <strong>Email:</strong> 
+                            <a href="mailto:ashans25@gmail.com">ashans25@gmail.com</a>
+                        </div>
+                        <div>
+                            <strong>Phone:</strong> 
+                            <a href="tel:+3932777024">+393932777024</a>
+                        </div>
+                        <div>
+                            <strong>Facebook:</strong> 
+                            <a href="https://www.facebook.com/ashanplus" target="_blank">
+                                Ashan Perera
+                            </a>
+                        </div>
+                    </div>
+                `;
+                
+                // Hide the cancel button, rename confirm button
+                modalCancel.style.display = 'none';
+                modalConfirm.textContent = 'Close';
+                
+                // Show the modal
+                modalOverlay.style.display = 'flex';
+                
+                // Add event listeners
+                const closeModal = () => {
+                    modalOverlay.style.display = 'none';
+                };
+                
+                modalConfirm.onclick = closeModal;
+                modalClose.onclick = closeModal;
+            });
         });
     </script>
 </body>
