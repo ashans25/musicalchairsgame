@@ -189,6 +189,7 @@ body {
 .control-btn.pause { background-color: var(--warning); }
 .control-btn.reset { background-color: var(--info); }
 .control-btn.return { background-color: var(--primary); }
+.control-btn.start { background-color: var(--success); } /* Add this line */
 
 .game-area {
     position: relative;
@@ -608,4 +609,523 @@ input:checked + .slider:before {
 .start-game-container {
     text-align: center;
     margin: 30px 0;
+}
+
+.time-input-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.time-input-group {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.time-input {
+    width: 60px;
+    padding: 8px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.time-label {
+    font-size: 14px;
+    color: #555;
+    font-weight: bold;
+}
+
+.control-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.control-btn:disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+/* Styling for the disabled remove music button */
+.panel-button.music-remove:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #aaa;
+    box-shadow: none;
+    transform: none;
+    border: 1px solid #999;
+    color: #eee;
+    pointer-events: none;
+}
+
+.panel-button.music-remove:disabled:hover {
+    transform: none;
+    box-shadow: none;
+    background-color: #aaa;
+}
+
+/* Add a subtle visual indication that music is not uploaded */
+.panel-button.music-remove:disabled::before {
+    position: absolute;
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+/* Make it work with your existing button click animation */
+.panel-button.music-remove:disabled:active {
+    transform: none;
+}
+
+/* Styling for the disabled remove player button */
+.panel-button.remove:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #aaa;
+    box-shadow: none;
+    transform: none;
+    border: 1px solid #999;
+    color: #eee;
+    pointer-events: none;
+}
+
+.panel-button.remove:disabled:hover {
+    transform: none;
+    box-shadow: none;
+    background-color: #aaa;
+}
+
+/* Add a subtle visual indication that removing players is not allowed */
+.panel-button.remove:disabled::before {
+    position: absolute;
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+/* Make it work with your existing button click animation */
+.panel-button.remove:disabled:active {
+    transform: none;
+}
+
+.song-duration-estimate {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #f5f7fa;
+}
+
+.time-display {
+    font-family: 'Courier New', monospace;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary);
+    padding: 5px 10px;
+    background: rgba(0,0,0,0.05);
+    border-radius: 4px;
+}
+
+.time-note {
+    font-size: 12px;
+    color: var(--gray);
+    font-style: italic;
+}
+
+.calculate {
+    background-color: var(--info);
+    margin-top: 15px;
+    width: 100%;
+}
+
+.exact-duration-result {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #f0f8ff;
+    border-radius: 8px;
+    border: 1px solid #e0e0ff;
+}
+
+.exact-duration-result.hidden {
+    display: none;
+}
+
+.regenerate {
+    background-color: var(--secondary);
+    font-size: 0.8rem;
+    padding: 6px 10px;
+    margin-left: auto;
+}
+
+.time-display {
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    color: var(--primary);
+    margin: 0 10px;
+}
+
+.highlight-section {
+    box-shadow: 0 0 15px rgba(33, 150, 243, 0.7);
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 15px rgba(33, 150, 243, 0.7); }
+    50% { box-shadow: 0 0 20px rgba(33, 150, 243, 0.9); }
+    100% { box-shadow: 0 0 15px rgba(33, 150, 243, 0.7); }
+}
+
+.music-notice {
+    background-color: #e8f5ff;
+    border-left: 4px solid #2196F3;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 3px;
+    font-weight: bold;
+    color: #0277bd;
+}
+
+/* Save button styling */
+.panel-button.save {
+    background-color: var(--success);
+    width: 100%;
+    margin-top: 20px;
+    padding: 12px;
+    font-size: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.panel-button.save::before {
+    font-size: 14px;
+}
+
+/* Duration result in music section styling */
+.exact-duration-result {
+    display: flex;
+    align-items: center;
+    background-color: #f0f8ff;
+    border-radius: 8px;
+    border: 1px solid #e0e0ff;
+    padding: 15px;
+    margin: 15px 0;
+    flex-wrap: wrap;
+}
+
+.duration-header {
+    font-weight: bold;
+    color: #0277bd;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.exact-duration-result.hidden {
+    display: none;
+}
+
+.time-display {
+    font-family: 'Courier New', monospace;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--primary);
+    padding: 5px 10px;
+    background: rgba(0,0,0,0.05);
+    border-radius: 4px;
+}
+
+.time-note {
+    width: 100%;
+    font-size: 12px;
+    color: #666;
+    font-style: italic;
+    margin-top: 10px;
+    text-align: right;
+}
+
+/* Updated Toast Container CSS */
+/* Complete toast system overhaul to prevent scroll issues */
+.toast-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1050;
+    max-width: 350px;
+    pointer-events: none; /* Allow clicks to pass through container */
+    transform: translateZ(0); /* Hardware acceleration */
+    will-change: transform; /* Hint to browser that only transform will change */
+    overflow: hidden; /* Prevent any overflow issues */
+  }
+  
+  .toast {
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    color: white;
+    pointer-events: auto; /* Allow clicks on the toast itself */
+    transform: translateX(100%); /* Start off-screen */
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    position: relative;
+  }
+  
+  .toast.show {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  
+  .toast.hide {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+.toast.success {
+  background-color: #4CAF50;
+}
+
+.toast.info {
+  background-color: #2196F3;
+}
+
+.toast.warning {
+  background-color: #FF9800;
+}
+
+.toast.error {
+  background-color: #F44336;
+}
+
+.toast-icon {
+  margin-right: 12px;
+  font-size: 20px;
+}
+
+@keyframes slideIn {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+/* Modal Dialog System */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.modal-container {
+  background-color: white;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  animation: slideDown 0.3s ease-out;
+}
+
+.modal-header {
+  padding: 15px 20px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #999;
+}
+
+.modal-content {
+  padding: 20px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.modal-footer {
+  padding: 15px 20px;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.panel-button.cancel {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.panel-button.confirm {
+  background-color: var(--primary);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.panel-button.start.disabled, 
+.panel-button.start:disabled {
+    background-color: #cccccc;
+    color: #888888;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+    opacity: 0.7;
+}
+
+.panel-button.start.disabled:hover, 
+.panel-button.start:disabled:hover {
+    transform: none;
+    box-shadow: none;
+    background-color: #cccccc;
+}
+
+/* Disabled file upload label styling */
+.file-upload-label.disabled {
+    background-color: #cccccc;
+    color: #888888;
+    cursor: not-allowed;
+    box-shadow: none;
+    opacity: 0.7;
+}
+
+.file-upload-label.disabled:hover {
+    background-color: #cccccc;
+    transform: none;
+}
+
+/* Ensure disabled state is visually clear */
+input[type="file"]:disabled + .file-name {
+    color: #888888;
+    opacity: 0.7;
+}
+
+.panel-button.save.disabled, 
+.panel-button.save:disabled {
+    background-color: #cccccc;
+    color: #888888;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.panel-button.save.disabled:before, 
+.panel-button.save:disabled:before {
+    opacity: 0.5;
+}
+
+/* Settings Management Buttons */
+.settings-management {
+    margin-top: 30px;
+    border-top: 1px dashed #ddd;
+    padding-top: 20px;
+}
+
+.panel-button.save-memory {
+    background-color: #8BC34A;
+    margin-bottom: 10px;
+}
+
+.panel-button.save-memory:hover {
+    background-color: #7CB342;
+}
+
+.panel-button.reset-memory {
+    background-color: #F44336;
+}
+
+.panel-button.reset-memory:hover {
+    background-color: #E53935;
+}
+
+.settings-note {
+    font-size: 12px;
+    color: #888;
+    font-style: italic;
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* Add these styles at an appropriate location in your CSS file */
+
+/* Replace the current game-header and top-right-controls styles with these: */
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 0 40px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.top-right-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.top-right-controls .panel-button {
+    width: 180px;
+}
+
+@media (max-width: 768px) {
+    .game-header {
+        justify-content: center;
+        text-align: center;
+    }
+    
+    .top-right-controls {
+        margin-top: 20px;
+        width: 100%;
+        align-items: center;
+    }
+}
+
+
+
+/* Add this note about auto-saving somewhere else if needed */
+.auto-save-note {
+    font-size: 12px;
+    color: #888;
+    font-style: italic;
+    text-align: right;
+    margin: 10px 20px;
 }
